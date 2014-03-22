@@ -1,7 +1,7 @@
 ﻿/*
-Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
-*/
+ Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.html or http://ckeditor.com/license
+ */
 
 CKEDITOR.editorConfig = function( config )
 {
@@ -9,27 +9,45 @@ CKEDITOR.editorConfig = function( config )
   // config.language = 'fr';
   // config.uiColor = '#AADC6E';
 
+  config.organization_id = function() {
+    var tavlo_org;
+    var metas = document.getElementsByTagName('meta');
+
+    for ( var i = 0 ; i < metas.length ; i++ ) {
+      meta = metas[i];
+      if (meta.name === 'tavlo_org') {
+        return meta.content;
+      }
+    }
+
+    return undefined;
+  }
+
+  var organization_id = config.organization_id();
+
+  // TODO: Display error if there is no tavlo_org meta in the document.
+
   /* Filebrowser routes */
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
-  config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
+  config.filebrowserBrowseUrl = "/ckeditor/org/" + organization_id + "/attachment_files";
 
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed in the Flash dialog.
-  config.filebrowserFlashBrowseUrl = "/ckeditor/attachment_files";
+  config.filebrowserFlashBrowseUrl = "/ckeditor/org/" + organization_id + "/attachment_files";
 
   // The location of a script that handles file uploads in the Flash dialog.
-  config.filebrowserFlashUploadUrl = "/ckeditor/attachment_files";
+  config.filebrowserFlashUploadUrl = "/ckeditor/org/" + organization_id + "/attachment_files";
 
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed in the Link tab of Image dialog.
-  config.filebrowserImageBrowseLinkUrl = "/ckeditor/pictures";
+  config.filebrowserImageBrowseLinkUrl = "/ckeditor/org/" + organization_id + "/pictures";
 
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed in the Image dialog.
-  config.filebrowserImageBrowseUrl = "/ckeditor/pictures";
+  config.filebrowserImageBrowseUrl = "/ckeditor/org/" + organization_id + "/pictures";
 
   // The location of a script that handles file uploads in the Image dialog.
-  config.filebrowserImageUploadUrl = "/ckeditor/pictures";
+  config.filebrowserImageUploadUrl = "/ckeditor/org/" + organization_id + "/pictures";
 
   // The location of a script that handles file uploads.
-  config.filebrowserUploadUrl = "/ckeditor/attachment_files";
+  config.filebrowserUploadUrl = "/ckeditor/org/" + organization_id + "/attachment_files";
 
   // Rails CSRF token
   config.filebrowserParams = function(){

@@ -1,14 +1,14 @@
 class Ckeditor::PicturesController < Ckeditor::ApplicationController
 
   def index
-    @pictures = Ckeditor.picture_adapter.find_all(ckeditor_pictures_scope)
+    @pictures = Ckeditor.picture_adapter.find_all(ckeditor_pictures_scope(:organization_id => params[:organization_id]))
     @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
 
     respond_with(@pictures, :layout => @pictures.first_page?)
   end
 
   def create
-    @picture = Ckeditor.picture_model.new
+    @picture = Ckeditor.picture_model.new(:organization_id => params[:organization_id])
     respond_with_asset(@picture)
   end
 

@@ -3,16 +3,16 @@
     :title => I18n.t('ckeditor.buttons.delete')),
           polymorphic_path(asset, :format => :json),
           :remote => true,
-          :method => :delete, 
+          :method => :delete,
           :data => {:confirm => t('ckeditor.confirm_delete')},
           :class => "fileupload-cancel gal-del" %>
-	
+
 	<div class="fileupload-file gal-inner-holder">
 		<div class="img"><%= image_tag(asset.url_thumb, :title => asset.filename) %></div>
 		<div class="img-data">
 			<div class="img-name"><%= asset.filename %></div>
 			<div class="time-size">
-				<div class="time"><%= asset.format_created_at %></div>
+				<div class="time"><%= "#{asset.width}×#{asset.height}" if asset.has_dimensions? %></div>
 				<div class="fileupload-size size"><%= number_to_human_size(asset.size) if asset.size %></div>
 			</div>
 		</div>
